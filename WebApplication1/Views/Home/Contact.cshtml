@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<main aria-labelledby="title" class="contact-page">
+    <h2 id="title">@ViewBag.Title</h2>
+    <h3>@ViewBag.Message</h3>
+
+    <section class="contact-section">
+        <h4>Kayo</h4>
+        <p>GitHub: <a href="https://github.com/Bassetto01" target="_blank">https://github.com/Bassetto01</a></p>
+        <p>Email: <a href="mailto:bassettokayo@gmail.com">bassettokayo@gmail.com</a></p>
+    </section>
+
+    <section class="contact-section">
+        <h4>Mateus</h4>
+        <p>GitHub: <a href="https://github.com/oc-mateus" target="_blank">https://github.com/oc-mateus</a></p>
+        <p>Email: <a href="mailto:mateusnegocios.com@gmail.com">mateusnegocios.com@gmail.com</a></p>
+    </section>
+</main>
+
+<style>
+    /* Estilos gerais para a página de contatos */
+    .contact-page {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: #4CAF50;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    h3 {
+        color: #555;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .contact-section {
+        background-color: #fff;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-section h4 {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .contact-section p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .contact-section a {
+        color: #4CAF50;
+        text-decoration: none;
+    }
+
+    .contact-section a:hover {
+        text-decoration: underline;
+    }
+
+</style>

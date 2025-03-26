@@ -1,0 +1,38 @@
+﻿@model WebApplication1.Models.Aluno
+
+@{
+    ViewBag.Title = "Exibir";
+}
+
+<h2>Exibição: </h2>
+
+<div>
+    <h4>Aluno: @Html.DisplayFor(model => model.Nome)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RA)
+        </dd>
+
+    </dl>
+</div>
+<div class="mt-2">
+    <button class="btn-block btn btn-outline-primary">
+        @Html.ActionLink("Editar", "Edit", new { /* id = Model.PrimaryKey */ }) 
+    </button>
+    <button class="btn-block btn btn-outline-secondary">
+        @Html.ActionLink("Voltar", "Listar")
+    </button>
+</div>

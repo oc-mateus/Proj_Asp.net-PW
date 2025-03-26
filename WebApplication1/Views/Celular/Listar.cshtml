@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebApplication1.Models.Celular>
+
+@{
+    ViewBag.Title = "Celular";
+}
+
+<h2>Listar: </h2>
+
+<button class="btn btn-outline-primary">
+    @Html.ActionLink("Cadastrar", "Create")
+</button>
+<table class="mt-2 table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Novo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Marca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Novo)
+        </td>
+        <td>
+            @Html.ActionLink("✒", "Edit", new { id = Model.ToList<WebApplication1.Models.Celular>().IndexOf(item) }) |
+            @Html.ActionLink("👁", "Exibir", new { id = Model.ToList<WebApplication1.Models.Celular>().IndexOf(item) }) |
+            @Html.ActionLink("🗑", "Delete", new { id = Model.ToList<WebApplication1.Models.Celular>().IndexOf(item) })
+        </td>
+    </tr>
+}
+
+</table>

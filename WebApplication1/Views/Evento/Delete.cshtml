@@ -1,0 +1,40 @@
+﻿@model WebApplication1.Models.Evento
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Excluir:</h2>
+
+<h3>Você tem certeza que deseja excluir este registro?</h3>
+<div>
+    <h4>Evento: @Html.DisplayFor(model => model.Local)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Local)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Local)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="mt-2 form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-outline-danger" />
+            <button class="btn btn-outline-primary">@Html.ActionLink("Voltar", "Listar")</button>
+        </div>
+    }
+</div>

@@ -1,0 +1,34 @@
+﻿@model WebApplication1.Models.Evento
+
+@{
+    ViewBag.Title = "Exibição";
+}
+
+<h2>Exibir: </h2>
+
+<div>
+    <h4>Evento: @Html.DisplayFor(model => model.Local)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Local)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Local)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+
+    </dl>
+</div>
+<div class="mt-2">
+    <button class="btn btn-outline-primary">@Html.ActionLink("Editar", "Edit", new { /* id = Model.PrimaryKey */ }) </button>
+    <button class="btn btn-outline-secondary">@Html.ActionLink("Voltar", "Listar")</button>
+</div>

@@ -1,0 +1,42 @@
+﻿@model WebApplication1.Models.Celular
+
+@{
+    ViewBag.Title = "Exibir";
+}
+
+<h2>Exibir</h2>
+
+<div>
+    <h4>Celular: @Html.DisplayFor(model => model.Marca)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Novo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Novo)
+        </dd>
+
+    </dl>
+</div>
+<div class="mt-2">
+    <button class="btn btn-outline-primary">@Html.ActionLink("Editar", "Edit", new { /* id = Model.PrimaryKey */ })</button>
+    <button class="btn btn-outline-secondary">@Html.ActionLink("Voltar", "Listar")</button>
+</div>

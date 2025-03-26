@@ -1,0 +1,48 @@
+﻿@model WebApplication1.Models.Celular
+
+@{
+    ViewBag.Title = "Deletar";
+}
+
+<h2>Excluir: </h2>
+
+<h3>Você tem certeza que deseja excluir este registro?</h3>
+<div>
+    <h4>Celular: @Html.DisplayFor(model => model.Marca)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Novo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Novo)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="mt-2 form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-outline-danger" /> 
+            <button class="btn btn-outline-primary">@Html.ActionLink("Voltar", "Listar")</button>
+        </div>
+    }
+</div>

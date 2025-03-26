@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<main aria-labelledby="title" class="about-page">
+    <h2 id="title">@ViewBag.Title</h2>
+    <h3>@ViewBag.Message</h3>
+
+    <section class="project-description">
+        <p>Este projeto foi desenvolvido com o intuito acadêmico, durante as aulas da disciplina de Programação Web, sob orientação dos professores Vinícius e Jones. Trata-se de um sistema CRUD (Create, Read, Update, Delete) para gerenciar dados de eventos, celulares, carros e alunos. A aplicação foi construída em ASP.NET, com o objetivo de proporcionar aos alunos uma experiência prática na implementação de funcionalidades típicas de sistemas de gerenciamento de dados.</p>
+
+        <p>O projeto visa ajudar no aprendizado de como construir interfaces de usuário dinâmicas e interativas. Através deste sistema, os estudantes puderam aprimorar suas habilidades de programação web e entender melhor os conceitos de manipulação de dados em ambientes corporativos e acadêmicos.</p>
+    </section>
+</main>
+
+<style>
+    /* Estilização geral da página About */
+    .about-page {
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: #4CAF50;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .project-description {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-description p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    
+</style>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebApplication1.Models.Carro>
+
+@{
+    ViewBag.Title = "Listar";
+}
+
+<h2>Listar: </h2>
+
+<button class="btn btn-outline-primary">
+    @Html.ActionLink("Cadastrar", "Create")
+</button>
+<table class="mt-2 table table-hover table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Placa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ano)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cor)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Placa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ano)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cor)
+            </td>
+            <td>
+                @Html.ActionLink("✒", "Edit", new { id = Model.ToList<WebApplication1.Models.Carro>().IndexOf(item) }) |
+                @Html.ActionLink("👁", "Exibir", new { id = Model.ToList<WebApplication1.Models.Carro>().IndexOf(item) }) |
+                @Html.ActionLink("🗑", "Delete", new { id = Model.ToList<WebApplication1.Models.Carro>().IndexOf(item) })
+            </td>
+        </tr>
+    }
+
+</table>
