@@ -12,6 +12,13 @@ namespace WebApplication1.Models
         public  string Marca { get; set; }
         public bool Novo { get; set; }
 
+        public DateTime Fabrica { get; set; }
+
+        public string GetDataCelular()
+        {
+            return Fabrica.ToString("dd/MM/yyyy");
+        }
+
         public static void GerarLista(HttpSessionStateBase session)
         {
             if (session["ListaCelular"] != null)
@@ -22,9 +29,9 @@ namespace WebApplication1.Models
                 }
             }
             var lista = new List<Celular>();
-            lista.Add(new Celular { Marca = "Samsung", Numero = 123456789, Novo = true });
-            lista.Add(new Celular { Marca = "Apple", Numero = 987654321, Novo = false });
-            lista.Add(new Celular { Marca = "Motorola", Numero = 246801357, Novo = true });
+            lista.Add(new Celular { Marca = "Samsung", Numero = 123456789, Novo = true, Fabrica = DateTime.Now });
+            lista.Add(new Celular { Marca = "Apple", Numero = 987654321, Novo = false, Fabrica = new DateTime(2024, 12, 16) });
+            lista.Add(new Celular { Marca = "Motorola", Numero = 246801357, Novo = true, Fabrica = DateTime.Now });
 
 
             session.Remove("ListaCelular");

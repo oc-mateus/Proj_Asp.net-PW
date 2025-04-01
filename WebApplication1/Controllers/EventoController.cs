@@ -63,7 +63,8 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Listar");
             }
 
-            
+            eventoExistente.Nome = evento.Nome;
+            eventoExistente.Banda = evento.Banda;
             eventoExistente.Data = evento.Data;
             eventoExistente.Local = evento.Local;
             

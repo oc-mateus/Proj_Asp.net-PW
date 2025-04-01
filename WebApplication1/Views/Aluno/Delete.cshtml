@@ -27,6 +27,15 @@
             @Html.DisplayFor(model => model.RA)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+
+        <dd>
+            @Model.GetData()
+
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm())

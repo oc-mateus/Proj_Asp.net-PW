@@ -12,22 +12,35 @@
 <table class="mt-2 table table-bordered table-hover">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Banda)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Local)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Data)
         </th>
-        <th></th>
+        
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Banda)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Local)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Data)
+            @item.GetDataEvento()
         </td>
+
         <td>
             @Html.ActionLink("✒", "Edit", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })
             @Html.ActionLink("👁", "Exibir", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })

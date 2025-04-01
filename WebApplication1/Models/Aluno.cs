@@ -11,6 +11,12 @@ namespace WebApplication1.Models
         public string Nome { get; set; }
         public string RA { get; set; }
 
+        public DateTime Data { get; set; }
+        public string GetData()
+        {
+            return Data.ToString("dd/MM/yyyy");
+        }
+
         public static void GerarLista(HttpSessionStateBase session)
         {
             if (session["ListaAluno"] != null)
@@ -21,9 +27,9 @@ namespace WebApplication1.Models
                 }
             }
             var lista = new List<Aluno>();
-            lista.Add(new Aluno { Nome = "João", RA = "230211" });
-            lista.Add(new Aluno { Nome = "Pedro", RA = "230212" });
-            lista.Add(new Aluno { Nome = "Kaique", RA = "230213" });
+            lista.Add(new Aluno { Nome = "João", RA = "230211", Data = new DateTime(2007, 2, 17) });
+            lista.Add(new Aluno { Nome = "Pedro", RA = "230212", Data = new DateTime(2017, 2, 02) });
+            lista.Add(new Aluno { Nome = "Kaique", RA = "230213", Data = new DateTime(2009, 2, 03) });
 
             session.Remove("ListaAluno");
             session.Add("ListaAluno", lista);
@@ -63,6 +69,7 @@ namespace WebApplication1.Models
                 var aluno = Aluno.Procurar(session, id);
                 aluno.Nome = this.Nome;
                 aluno.RA = this.RA;
+                aluno.Data = this.Data;
             }
         }
     }

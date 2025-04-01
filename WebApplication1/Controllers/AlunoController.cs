@@ -65,6 +65,7 @@ namespace WebApplication1.Controllers
 
             alunoExistente.Nome = aluno.Nome;
             alunoExistente.RA = aluno.RA;
+            alunoExistente.Data = aluno.Data;
            
 
             

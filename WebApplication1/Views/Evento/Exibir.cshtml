@@ -7,9 +7,21 @@
 <h2>Exibir: </h2>
 
 <div>
-    <h4>Evento: @Html.DisplayFor(model => model.Local)</h4>
+    <h4>Evento: @Html.DisplayFor(model => model.Nome)</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Banda)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Banda)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Local)
         </dt>
@@ -23,7 +35,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Data)
+            @Model.GetDataEvento()
         </dd>
 
     </dl>

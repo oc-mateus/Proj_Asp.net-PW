@@ -8,8 +8,12 @@ namespace WebApplication1.Models
     public class Carro
     {
         public string Placa { get; set; }
-        public string Ano { get; set; }
+        public DateTime Ano { get; set; }
         public string Cor { get; set; }
+        public string GetDataCarro()
+        {
+            return Ano.ToString("yyyy");
+        }
 
         public static void GerarListaCarro(HttpSessionStateBase session)
         {
@@ -22,9 +26,9 @@ namespace WebApplication1.Models
             }
 
             var lista = new List<Carro>();
-            lista.Add(new Carro { Placa = "ABC-14F4", Ano = "2009", Cor = "Azul" });
-            lista.Add(new Carro { Placa = "DFG-244R", Ano = "2010", Cor = "Prata" });
-            lista.Add(new Carro { Placa = "KLP-G66T", Ano = "2015", Cor = "Vermelho" });
+            lista.Add(new Carro { Placa = "ABC-14F4", Ano = new DateTime(2009), Cor = "Azul" });
+            lista.Add(new Carro { Placa = "DFG-244R", Ano = new DateTime(2024), Cor = "Prata" });
+            lista.Add(new Carro { Placa = "KLP-G66T", Ano = new DateTime(2015), Cor = "Vermelho" });
 
             session.Remove("ListaCarro");
             session.Add("ListaCarro", lista);
