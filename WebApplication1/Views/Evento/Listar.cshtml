@@ -9,6 +9,10 @@
 <button class="btn btn-outline-primary">
     @Html.ActionLink("Cadastrar", "Create")
 </button>
+<a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "evento" })" class="btn btn-outline-secondary">
+    Relatório de Eventos
+</a>
+
 <table class="mt-2 table table-bordered table-hover">
     <tr>
         <th>
@@ -23,30 +27,31 @@
         <th>
             @Html.DisplayNameFor(model => model.Data)
         </th>
-        
+
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Banda)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Local)
-        </td>
-        <td>
-            @item.GetDataEvento()
-        </td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Banda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Local)
+            </td>
+            <td>
+                @item.GetDataEvento()
+            </td>
 
-        <td>
-            @Html.ActionLink("✒", "Edit", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })
-            @Html.ActionLink("👁", "Exibir", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })
-            @Html.ActionLink("🗑", "Delete", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })
-        </td>
-    </tr>
-}
+            <td>
+                @Html.ActionLink("✒", "Edit", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })
+                @Html.ActionLink("👁", "Exibir", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })
+                @Html.ActionLink("🗑", "Delete", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })
+            </td>
+        </tr>
+    }
 
 </table>

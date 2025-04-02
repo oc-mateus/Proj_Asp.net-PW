@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -65,7 +68,7 @@ namespace WebApplication1.Controllers
 
             alunoExistente.Nome = aluno.Nome;
             alunoExistente.RA = aluno.RA;
-            alunoExistente.Data = aluno.Data;
+            alunoExistente.Nascimento = aluno.Nascimento;
            
 
             
@@ -90,5 +93,9 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Listar");
         }
 
+        
+
     }
+
+
 }

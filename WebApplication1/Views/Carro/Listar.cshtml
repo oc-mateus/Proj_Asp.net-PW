@@ -9,6 +9,11 @@
 <button class="btn btn-outline-primary">
     @Html.ActionLink("Cadastrar", "Create")
 </button>
+<a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "carro" })" class="btn btn-outline-secondary">
+    Relatório de Carros
+</a>
+
+
 <table class="mt-2 table table-hover table-bordered">
     <tr>
         <th>
@@ -30,7 +35,7 @@
                 @Html.DisplayFor(modelItem => item.Placa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Ano)
+                @item.GetDataCarro()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cor)

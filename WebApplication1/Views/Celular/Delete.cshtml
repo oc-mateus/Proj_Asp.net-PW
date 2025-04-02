@@ -27,6 +27,14 @@
             @Html.DisplayFor(model => model.Marca)
         </dd>
 
+         <dt>
+            @Html.DisplayNameFor(model => model.Fabrica)
+        </dt>
+
+        <dd>
+            @Model.GetDataCelular()
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Novo)
         </dt>

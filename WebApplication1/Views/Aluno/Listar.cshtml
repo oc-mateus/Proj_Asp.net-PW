@@ -9,6 +9,12 @@
 <button class="btn btn-outline-primary">
     @Html.ActionLink("Cadastrar", "Create")
 </button>
+<a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "aluno" })" class="btn btn-outline-secondary">
+    Relatório de Alunos
+</a>
+
+
+
 <table class="mt-2 table table-bordered table-hover">
     <tr>
         <th>
@@ -18,7 +24,7 @@
             @Html.DisplayNameFor(model => model.RA)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Data)
+            @Html.DisplayNameFor(model => model.Nascimento)
         </th>
     </tr>
 
@@ -31,7 +37,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RA)
             </td>
-            
+
             <td>
                 @item.GetData()
             </td>

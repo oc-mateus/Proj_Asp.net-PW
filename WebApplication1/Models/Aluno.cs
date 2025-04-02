@@ -10,11 +10,10 @@ namespace WebApplication1.Models
     {
         public string Nome { get; set; }
         public string RA { get; set; }
-
-        public DateTime Data { get; set; }
+        public DateTime Nascimento { get; set; }
         public string GetData()
         {
-            return Data.ToString("dd/MM/yyyy");
+            return Nascimento.ToString("dd/MM/yyyy");
         }
 
         public static void GerarLista(HttpSessionStateBase session)
@@ -27,9 +26,21 @@ namespace WebApplication1.Models
                 }
             }
             var lista = new List<Aluno>();
-            lista.Add(new Aluno { Nome = "João", RA = "230211", Data = new DateTime(2007, 2, 17) });
-            lista.Add(new Aluno { Nome = "Pedro", RA = "230212", Data = new DateTime(2017, 2, 02) });
-            lista.Add(new Aluno { Nome = "Kaique", RA = "230213", Data = new DateTime(2009, 2, 03) });
+            lista.Add(new Aluno { Nome = "João", RA = "230211", Nascimento = new DateTime(2007, 2, 17) });
+            lista.Add(new Aluno { Nome = "Maria", RA = "230212", Nascimento = new DateTime(2006, 5, 12) });
+            lista.Add(new Aluno { Nome = "Carlos", RA = "230213", Nascimento = new DateTime(2007, 8, 25) });
+            lista.Add(new Aluno { Nome = "Ana", RA = "230214", Nascimento = new DateTime(2006, 3, 9) });
+            lista.Add(new Aluno { Nome = "Pedro", RA = "230215", Nascimento = new DateTime(2007, 11, 30) });
+            lista.Add(new Aluno { Nome = "Fernanda", RA = "230216", Nascimento = new DateTime(2006, 7, 19) });
+            lista.Add(new Aluno { Nome = "Lucas", RA = "230217", Nascimento = new DateTime(2007, 1, 5) });
+            lista.Add(new Aluno { Nome = "Juliana", RA = "230218", Nascimento = new DateTime(2006, 9, 14) });
+            lista.Add(new Aluno { Nome = "Gustavo", RA = "230219", Nascimento = new DateTime(2007, 6, 22) });
+            lista.Add(new Aluno { Nome = "Camila", RA = "230220", Nascimento = new DateTime(2006, 12, 3) });
+            lista.Add(new Aluno { Nome = "Rafael", RA = "230221", Nascimento = new DateTime(2007, 4, 8) });
+            lista.Add(new Aluno { Nome = "Beatriz", RA = "230222", Nascimento = new DateTime(2006, 10, 27) });
+            lista.Add(new Aluno { Nome = "André", RA = "230223", Nascimento = new DateTime(2007, 5, 15) });
+            lista.Add(new Aluno { Nome = "Letícia", RA = "230224", Nascimento = new DateTime(2006, 8, 11) });
+            lista.Add(new Aluno { Nome = "Eduardo", RA = "230225", Nascimento = new DateTime(2007, 2, 2) });
 
             session.Remove("ListaAluno");
             session.Add("ListaAluno", lista);
@@ -69,7 +80,7 @@ namespace WebApplication1.Models
                 var aluno = Aluno.Procurar(session, id);
                 aluno.Nome = this.Nome;
                 aluno.RA = this.RA;
-                aluno.Data = this.Data;
+                aluno.Nascimento = this.Nascimento;
             }
         }
     }

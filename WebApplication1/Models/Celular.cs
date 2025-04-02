@@ -29,9 +29,21 @@ namespace WebApplication1.Models
                 }
             }
             var lista = new List<Celular>();
-            lista.Add(new Celular { Marca = "Samsung", Numero = 123456789, Novo = true, Fabrica = DateTime.Now });
-            lista.Add(new Celular { Marca = "Apple", Numero = 987654321, Novo = false, Fabrica = new DateTime(2024, 12, 16) });
-            lista.Add(new Celular { Marca = "Motorola", Numero = 246801357, Novo = true, Fabrica = DateTime.Now });
+            lista.Add(new Celular { Marca = "Samsung", Numero = 123456789, Novo = true, Fabrica = new DateTime(2025, 1, 1) });
+            lista.Add(new Celular { Marca = "Apple", Numero = 987654321, Novo = false, Fabrica = new DateTime(2022, 5, 10) });
+            lista.Add(new Celular { Marca = "Xiaomi", Numero = 112233445, Novo = true, Fabrica = new DateTime(2025, 2, 15) });
+            lista.Add(new Celular { Marca = "Motorola", Numero = 556677889, Novo = false, Fabrica = new DateTime(2021, 7, 20) });
+            lista.Add(new Celular { Marca = "Nokia", Numero = 667788990, Novo = true, Fabrica = new DateTime(2024, 1, 5) });
+            lista.Add(new Celular { Marca = "OnePlus", Numero = 998877665, Novo = true, Fabrica = new DateTime(2024, 9, 25) });
+            lista.Add(new Celular { Marca = "Sony", Numero = 334455667, Novo = false, Fabrica = new DateTime(2020, 11, 30) });
+            lista.Add(new Celular { Marca = "LG", Numero = 223344556, Novo = false, Fabrica = new DateTime(2019, 6, 18) });
+            lista.Add(new Celular { Marca = "Asus", Numero = 778899001, Novo = true, Fabrica = new DateTime(2025, 4, 12) });
+            lista.Add(new Celular { Marca = "Huawei", Numero = 556644332, Novo = false, Fabrica = new DateTime(2021, 2, 28) });
+            lista.Add(new Celular { Marca = "Realme", Numero = 445566778, Novo = true, Fabrica = new DateTime(2024, 8, 22) });
+            lista.Add(new Celular { Marca = "Oppo", Numero = 990011223, Novo = true, Fabrica = new DateTime(2024, 3, 10) });
+            lista.Add(new Celular { Marca = "Google", Numero = 887766554, Novo = false, Fabrica = new DateTime(2022, 12, 5) });
+            lista.Add(new Celular { Marca = "Lenovo", Numero = 665544332, Novo = false, Fabrica = new DateTime(2020, 9, 14) });
+            lista.Add(new Celular { Marca = "Vivo", Numero = 112233556, Novo = true, Fabrica = new DateTime(2025, 5, 1) });
 
 
             session.Remove("ListaCelular");

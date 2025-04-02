@@ -26,9 +26,21 @@ namespace WebApplication1.Models
             }
 
             var lista = new List<Carro>();
-            lista.Add(new Carro { Placa = "ABC-14F4", Ano = new DateTime(2009), Cor = "Azul" });
-            lista.Add(new Carro { Placa = "DFG-244R", Ano = new DateTime(2024), Cor = "Prata" });
-            lista.Add(new Carro { Placa = "KLP-G66T", Ano = new DateTime(2015), Cor = "Vermelho" });
+            lista.Add(new Carro { Placa = "ABC-14F4", Ano = new DateTime(2015, 1, 1), Cor = "Azul" });
+            lista.Add(new Carro { Placa = "DEF-23G5", Ano = new DateTime(2018, 1, 1), Cor = "Vermelho" });
+            lista.Add(new Carro { Placa = "GHI-56H7", Ano = new DateTime(2020, 1, 1), Cor = "Preto" });
+            lista.Add(new Carro { Placa = "JKL-78I9", Ano = new DateTime(2017, 1, 1), Cor = "Branco" });
+            lista.Add(new Carro { Placa = "MNO-90J1", Ano = new DateTime(2019, 1, 1), Cor = "Prata" });
+            lista.Add(new Carro { Placa = "PQR-12K3", Ano = new DateTime(2016, 1, 1), Cor = "Cinza" });
+            lista.Add(new Carro { Placa = "STU-34L5", Ano = new DateTime(2021, 1, 1), Cor = "Verde" });
+            lista.Add(new Carro { Placa = "VWX-56M7", Ano = new DateTime(2013, 1, 1), Cor = "Amarelo" });
+            lista.Add(new Carro { Placa = "YZA-78N9", Ano = new DateTime(2014, 1, 1), Cor = "Azul" });
+            lista.Add(new Carro { Placa = "BCD-90O1", Ano = new DateTime(2022, 1, 1), Cor = "Vermelho" });
+            lista.Add(new Carro { Placa = "EFG-12P3", Ano = new DateTime(2015, 1, 1), Cor = "Preto" });
+            lista.Add(new Carro { Placa = "HIJ-34Q5", Ano = new DateTime(2018, 1, 1), Cor = "Branco" });
+            lista.Add(new Carro { Placa = "KLM-56R7", Ano = new DateTime(2020, 1, 1), Cor = "Prata" });
+            lista.Add(new Carro { Placa = "NOP-78S9", Ano = new DateTime(2017, 1, 1), Cor = "Cinza" });
+            lista.Add(new Carro { Placa = "QRS-90T1", Ano = new DateTime(2016, 1, 1), Cor = "Verde" });
 
             session.Remove("ListaCarro");
             session.Add("ListaCarro", lista);
