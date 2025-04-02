@@ -11,10 +11,8 @@ namespace WebApplication1.Controllers
 {
     public class PdfController : Controller
     {
-        // Ação para gerar o PDF com dados específicos de cada tema
         public ActionResult DownloadPdf(string tema)
-        {
-            // Recuperando as listas específicas com base no parâmetro "tema"
+        { 
             object listaDados = null;
 
             switch (tema.ToLower())
@@ -40,18 +38,15 @@ namespace WebApplication1.Controllers
                 return HttpNotFound("Não há dados cadastrados para o tema selecionado!");
             }
 
-            // Gerando o PDF
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 Document document = new Document();
                 PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
                 document.Open();
 
-                // Adicionando título
                 document.Add(new Paragraph($"Relatório de {tema}"));
-                document.Add(new Paragraph(" ")); // Espaço
+                document.Add(new Paragraph(" "));
 
-                // Adicionando os dados de acordo com o tema
                 if (tema.ToLower() == "aluno")
                 {
                     var alunos = listaDados as List<Aluno>;
