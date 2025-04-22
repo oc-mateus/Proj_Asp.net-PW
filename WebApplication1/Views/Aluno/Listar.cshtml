@@ -1,52 +1,119 @@
-﻿@model IEnumerable<WebApplication1.Models.Aluno>
+﻿@model List<WebApplication1.Models.Aluno>
 
 @{
-    ViewBag.Title = "Lista";
+
+    ViewBag.Title = "Lista de Alunos";
+
 }
 
-<h2>Listar: </h2>
+
+<h2>Lista de Alunos</h2>
+
+
+
 
 <button class="btn btn-outline-primary">
     @Html.ActionLink("Cadastrar", "Create")
 </button>
-<a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "aluno" })" class="btn btn-outline-secondary">
-    Relatório de Alunos
-</a>
+
+<a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "aluno" })" class="btn btn-outline-secondary"> Relatório de Alunos </a>
+
+   <a> @Html.ActionLink("Exportar Excel", "DownloadExcel", null, new { @class = "btn btn-outline-success" })</a>
 
 
+<table id="tabelaAlunos" class="table table-bordered table-striped">
 
-<table class="mt-2 table table-bordered table-hover">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RA)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nascimento)
-        </th>
-    </tr>
+    <thead>
 
-    @foreach (var item in Model)
-    {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RA)
-            </td>
 
-            <td>
-                @item.GetData()
-            </td>
-            <td>
-                @Html.ActionLink("✒", "Edit", new { id = Model.ToList<WebApplication1.Models.Aluno>().IndexOf(item) }) |
-                @Html.ActionLink("👁", "Exibir", new { id = Model.ToList<WebApplication1.Models.Aluno>().IndexOf(item) }) |
-                @Html.ActionLink("🗑", "Delete", new { id = Model.ToList<WebApplication1.Models.Aluno>().IndexOf(item) })
-            </td>
+            <th>Nome</th>
+
+            <th>Email</th>
+
+            <th>RA</th>
+
+            <th>Data de Nascimento</th>
+
+            <th>Ações</th>
+
         </tr>
-    }
+
+    </thead>
+
+    <tbody>
+
+        @foreach (var aluno in Model)
+
+        {
+
+            <tr>
+
+                <td>@aluno.Nome</td>
+
+                <td>@aluno.Email</td>
+
+                <td>@aluno.RA</td>
+
+                <td>@aluno.Nascimento.ToShortDateString()</td>
+
+                <td>
+
+                    @Html.ActionLink("Editar", "Edit", new { id = aluno.Id }, new { @class = "btn btn-warning btn-sm" })
+
+                    <button class="btn btn-danger btn-sm" onclick="excluirAluno(@aluno.Id)">Excluir</button>
+
+                </td>
+
+            </tr>
+
+        }
+
+    </tbody>
 
 </table>
+
+
+@section Scripts {
+
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" />
+
+
+    <script>
+
+$(document).ready(function () {
+
+$('#tabelaAlunos').DataTable();
+
+});
+
+
+function excluirAluno(id) {
+
+if (confirm('Deseja realmente excluir este aluno?')) {
+
+$.post('@Url.Action("DeleteAjax")', { id: id }, function (data) {
+
+if (data.sucesso) {
+
+location.reload();
+
+} else {
+
+alert("Erro ao excluir aluno.");
+
+}
+
+});
+
+}
+
+}
+
+    </script>
+
+}
