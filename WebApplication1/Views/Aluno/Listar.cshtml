@@ -1,119 +1,52 @@
-﻿@model List<WebApplication1.Models.Aluno>
+﻿@model List<WebApplication1.Models.Carro>
 
 @{
-
-    ViewBag.Title = "Lista de Alunos";
-
+    ViewBag.Title = "Lista de Carros";
 }
 
+<h2>Lista de Carros</h2>
 
-<h2>Lista de Alunos</h2>
+<a>
+    @Html.ActionLink("Cadastrar", "Create", null, new { @class = "btn btn-outline-primary" })
+</a>
 
+<a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "carro" })" class="btn btn-outline-secondary">
+    Relatório de Carros
+</a>
 
+<a href="@Url.Action("DownloadExcel", "Excel", new { tema = "carro" })" class="btn btn-outline-success">
+    Planilha de Carros
+</a>
 
+<hr />
 
-<button class="btn btn-outline-primary">
-    @Html.ActionLink("Cadastrar", "Create")
-</button>
-
-<a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "aluno" })" class="btn btn-outline-secondary"> Relatório de Alunos </a>
-
-   <a> @Html.ActionLink("Exportar Excel", "DownloadExcel", null, new { @class = "btn btn-outline-success" })</a>
-
-
-<table id="tabelaAlunos" class="table table-bordered table-striped">
-
+<table id="tabelaCarros" class="table table-bordered table-hover">
     <thead>
-
         <tr>
-
-            <th>Nome</th>
-
-            <th>Email</th>
-
-            <th>RA</th>
-
-            <th>Data de Nascimento</th>
-
+            <th>Placa</th>
+            <th>Ano</th>
+            <th>Cor</th>
             <th>Ações</th>
-
         </tr>
-
     </thead>
-
     <tbody>
-
-        @foreach (var aluno in Model)
-
+        @foreach (var carro in Model)
         {
-
             <tr>
-
-                <td>@aluno.Nome</td>
-
-                <td>@aluno.Email</td>
-
-                <td>@aluno.RA</td>
-
-                <td>@aluno.Nascimento.ToShortDateString()</td>
-
+                <td>@carro.Placa</td>
+                <td>@carro.Ano.ToString("yyyy")</td>
+                <td>@carro.Cor</td>
                 <td>
-
-                    @Html.ActionLink("Editar", "Edit", new { id = aluno.Id }, new { @class = "btn btn-warning btn-sm" })
-
-                    <button class="btn btn-danger btn-sm" onclick="excluirAluno(@aluno.Id)">Excluir</button>
-
+                    @Html.ActionLink("Editar", "Edit", new { id = carro.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                    <button class="btn btn-outline-danger btn-sm" onclick="excluirCarro(@carro.Id)">Excluir</button>
                 </td>
-
             </tr>
-
         }
-
     </tbody>
-
 </table>
 
-
 @section Scripts {
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" />
-
-
-    <script>
-
-$(document).ready(function () {
-
-$('#tabelaAlunos').DataTable();
-
-});
-
-
-function excluirAluno(id) {
-
-if (confirm('Deseja realmente excluir este aluno?')) {
-
-$.post('@Url.Action("DeleteAjax")', { id: id }, function (data) {
-
-if (data.sucesso) {
-
-location.reload();
-
-} else {
-
-alert("Erro ao excluir aluno.");
-
-}
-
-});
-
-}
-
-}
-
-    </script>
-
-}
+    <link

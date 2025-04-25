@@ -77,9 +77,11 @@ namespace WebApplication1.Models
 
         public void Excluir(HttpSessionStateBase session)
         {
-            var lista = session["ListaAluno"] as List<Aluno>;
+            var lista = (List<Aluno>)session["ListaAluno"];
             lista.RemoveAll(a => a.Id == this.Id);
+            session["ListaAluno"] = lista;
         }
+
 
         public void Editar(HttpSessionStateBase session, int id)
         {

@@ -26,19 +26,24 @@ namespace WebApplication1.Controllers
             return View((Session["ListaCarro"] as List<Carro>).ElementAt(id));
         }
 
-        public ActionResult Delete(int id)
-        {
-            return View((Session["ListaCarro"] as List<Carro>).ElementAt(id));
-        }
+      
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public ActionResult Delete(int id, Carro carro)
+        public ActionResult DeleteAjax(int id)
         {
-            Carro.ProcurarCarro(Session, id)?.ExcluirCarro(Session);
-            return RedirectToAction("Listar");
+            var carros = Session["ListaCarro"] as List<Carro>;
+            var carro = carros?.FirstOrDefault(c => c.Id == id);
+
+            if (carro == null)
+                return Json(new { sucesso = false, mensagem = "Carro não encontrado." });
+
+            carros.Remove(carro);
+            Session["ListaCarro"] = carros;
+
+            return Json(new { sucesso = true });
         }
+
 
         public ActionResult Edit(int id)
         {
