@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
         // GET: Celular
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Listar");
         }
 
         public ActionResult Listar()
@@ -23,28 +23,50 @@ namespace WebApplication1.Controllers
 
         public ActionResult Exibir(int id)
         {
-            return View((Session["ListaCelular"] as List<Celular>).ElementAt(id));
+            var lista = Session["ListaCelular"] as List<Celular>;
+            var celular = lista?.FirstOrDefault(c => c.Id == id);
+            return View(celular);
         }
 
         public ActionResult Delete(int id)
         {
-            return View((Session["ListaCelular"] as List<Celular>).ElementAt(id));
+            var lista = Session["ListaCelular"] as List<Celular>;
+            var celular = lista?.FirstOrDefault(c => c.Id == id);
+            return View(celular);
         }
+
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-
-        public ActionResult Delete(int id, Celular celular)
+        public ActionResult DeleteAjax(int id)
         {
-            Celular.Procurar(Session, id)?.Excluir(Session);
+            try
+            {
+                var lista = Session["ListaCelular"] as List<Celular>;
 
-            return RedirectToAction("Listar");
+                if (lista == null)
+                    return Json(new { sucesso = false, mensagem = "Lista de celulares não encontrada na sessão." });
+
+                var celular = lista.FirstOrDefault(c => c.Id == id);
+
+                if (celular == null)
+                    return Json(new { sucesso = false, mensagem = "Celular não encontrado." });
+
+                lista.Remove(celular);
+                Session["ListaCelular"] = lista;
+
+                return Json(new { sucesso = true, mensagem = "Celular excluído com sucesso." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { sucesso = false, mensagem = "Erro ao excluir celular: " + ex.Message });
+            }
         }
-
 
         public ActionResult Edit(int id)
         {
-            return View((Session["ListaCelular"] as List<Celular>).ElementAt(id));
+            var lista = Session["ListaCelular"] as List<Celular>;
+            var celular = lista?.FirstOrDefault(c => c.Id == id);
+            return View(celular);
         }
 
         [HttpPost]
@@ -53,24 +75,19 @@ namespace WebApplication1.Controllers
         {
             var listaCelular = Session["ListaCelular"] as List<Celular>;
             if (listaCelular == null)
-            {
                 return RedirectToAction("Listar");
-            }
 
-            Celular celularExistente = listaCelular.ElementAtOrDefault(id);
+            var celularExistente = listaCelular.FirstOrDefault(c => c.Id == id);
             if (celularExistente == null)
-            {
                 return RedirectToAction("Listar");
-            }
 
-           
+            // Atualizar propriedades
             celularExistente.Marca = celular.Marca;
-            celularExistente.Novo = celular.Novo;
             celularExistente.Numero = celular.Numero;
-            
+            celularExistente.Novo = celular.Novo;
+            celularExistente.Fabrica = celular.Fabrica;
 
             Session["ListaCelular"] = listaCelular;
-
             return RedirectToAction("Listar");
         }
 
@@ -81,11 +98,9 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public ActionResult Create(Celular celular)
         {
             celular.Adicionar(Session);
-
             return RedirectToAction("Listar");
         }
     }

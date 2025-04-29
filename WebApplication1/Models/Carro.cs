@@ -27,11 +27,13 @@ namespace WebApplication1.Models
         [Required(ErrorMessage = "A Cor é Obrigatória!")]
         public string Cor { get; set; }
 
+        // Método para retornar o ano do carro
         public string GetDataCarro()
         {
             return Ano.ToString("yyyy");
         }
 
+        // Método para gerar a lista de carros na sessão, caso ainda não exista
         public static void GerarListaCarro(HttpSessionStateBase session)
         {
             if (session["ListaCarro"] == null)

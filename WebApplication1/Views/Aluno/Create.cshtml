@@ -1,72 +1,72 @@
 ﻿@model WebApplication1.Models.Aluno
 
 @{
-
     ViewBag.Title = "Cadastrar Aluno";
-
 }
 
-
-<h2>Cadastrar Aluno</h2>
-
+<h2 class="text-center mb-4">Cadastrar Aluno</h2>
 
 @using (Html.BeginForm())
-
 {
-
     @Html.AntiForgeryToken()
 
+    <div class="container">
+        <div class="card p-4 shadow-sm">
+            <h4 class="text-primary">Preencha os Detalhes do Aluno</h4>
+            <hr />
 
-    <div class="form-group">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @Html.LabelFor(m => m.Nome)
+            <!-- Nome -->
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Nome, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+            <!-- Email -->
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-        @Html.ValidationMessageFor(m => m.Nome)
+            <!-- RA -->
+            <div class="form-group row">
+                @Html.LabelFor(m => m.RA, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.RA, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.RA, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
+            <!-- Nascimento -->
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Nascimento, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Nascimento, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.Nascimento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!-- Botão Salvar -->
+            <div class="form-group row">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-outline-success btn-lg">Salvar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-
-        @Html.LabelFor(m => m.Email)
-
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-
-        @Html.ValidationMessageFor(m => m.Email)
-
+    <div class="mt-4 text-center">
+        @Html.ActionLink("Voltar", "Listar", null, new { @class = "btn btn-outline-secondary btn-lg" })
     </div>
-
-     <div class="form-group">
-
-        @Html.LabelFor(m => m.RA)
-
-        @Html.TextBoxFor(m => m.RA, new { @class = "form-control" })
-
-        @Html.ValidationMessageFor(m => m.RA)
-
-    </div>
-
-    <div class="form-group">
-
-        @Html.LabelFor(m => m.Nascimento)
-
-        @Html.TextBoxFor(m => m.Nascimento, new { @class = "form-control", type = "date" })
-
-        @Html.ValidationMessageFor(m => m.Nascimento)
-
-    </div>
-
-
-    <button type="submit" class="btn btn-primary">Salvar</button>
-
-    @Html.ActionLink("Voltar", "Listar", null, new { @class = "btn btn-secondary" })
-
 }
 
-
 @section Scripts {
-
     @Scripts.Render("~/bundles/jqueryval")
-
 }

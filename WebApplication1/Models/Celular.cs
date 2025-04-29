@@ -10,25 +10,19 @@ namespace WebApplication1.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "O Número é Obrigatório!")]
+        [Required(ErrorMessage = "O número é obrigatório!")]
         public int Numero { get; set; }
 
-        [Required(ErrorMessage = "A Marca é Obrigatória!")]
+        [Required(ErrorMessage = "A marca é obrigatória!")]
         public string Marca { get; set; }
 
-        [Required(ErrorMessage = "O Estado do Aparelho é Obrigatório!")]
+        [Required(ErrorMessage = "O estado do aparelho é obrigatório!")]
         public bool Novo { get; set; }
 
-        [Required(ErrorMessage = "A Data de Fabricação é obrigatória.")]
-
+        [Required(ErrorMessage = "A data de fabricação é obrigatória.")]
         [DataType(DataType.Date)]
-
         [Display(Name = "Data de Fabricação")]
-
         public DateTime Fabrica { get; set; }
-
-        
-
 
         public string GetDataCelular()
         {
@@ -46,7 +40,9 @@ namespace WebApplication1.Models
         public void Adicionar(HttpSessionStateBase session)
         {
             var lista = session["ListaCelular"] as List<Celular>;
-            this.Id = lista.Any() ? lista.Max(c => c.Id) + 1 : 0; 
+
+            this.Id = lista.Any() ? lista.Max(c => c.Id) + 1 : 0;
+
             lista.Add(this);
         }
 

@@ -1,57 +1,107 @@
 ﻿@model IEnumerable<WebApplication1.Models.Evento>
 
 @{
-    ViewBag.Title = "Lista";
+    ViewBag.Title = "Lista de Eventos";
 }
 
-<h2>Listar: </h2>
+<h2 class="mb-4">Lista de Eventos</h2>
 
-<button class="btn btn-outline-primary">
-    @Html.ActionLink("Cadastrar", "Create")
-</button>
-<a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "evento" })" class="btn btn-outline-secondary">
-    Relatório de Eventos
-</a>
+<div class="mb-3">
+    @Html.ActionLink("Cadastrar", "Create", null, new { @class = "btn btn-outline-primary" })
+    <a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "evento" })" class="btn btn-outline-danger">📄 Exportar PDF</a>
+    <a href="@Url.Action("DownloadExcel", "Excel", new { tema = "evento" })" class="btn btn-outline-success">📊 Exportar Excel</a>
+</div>
 
-<table class="mt-2 table table-bordered table-hover">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Banda)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Local)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Data)
-        </th>
-
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table id="tabelaEventos" class="table table-bordered table-hover">
+    <thead class="thead-dark">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Banda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Local)
-            </td>
-            <td>
-                @item.GetDataEvento()
-            </td>
-
-            <td>
-                @Html.ActionLink("✒", "Edit", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })
-                @Html.ActionLink("👁", "Exibir", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })
-                @Html.ActionLink("🗑", "Delete", new { id = Model.ToList<WebApplication1.Models.Evento>().IndexOf(item) })
-            </td>
+            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.Banda)</th>
+            <th>@Html.DisplayNameFor(model => model.Local)</th>
+            <th>@Html.DisplayNameFor(model => model.Data)</th>
+            <th style="width: 150px;">Ações</th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+        @foreach (var evento in Model)
+        {
+            <tr>
+                <td>@evento.Nome</td>
+                <td>@evento.Banda</td>
+                <td>@evento.Local</td>
+                <td>@evento.Data.ToShortDateString()</td>
+                <td>
+                    @Html.ActionLink("✏️ Editar", "Edit", new { id = evento.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                    <button class="btn btn-outline-danger btn-sm" onclick="confirmarExclusao(@evento.Id, '@evento.Nome')">🗑 Excluir</button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="modalExcluirLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalExcluirLabel">Confirmar Exclusão</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja excluir o evento <strong id="eventoNome"></strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarExcluir">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- DataTables + Bootstrap -->
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" />
+
+    <script>
+        var idEventoParaExcluir = 0;
+
+        function confirmarExclusao(id, nome) {
+            idEventoParaExcluir = id;
+            $("#eventoNome").text(nome);
+            $("#modalExcluir").modal('show');
+        }
+
+        $("#btnConfirmarExcluir").click(function () {
+            $.post('@Url.Action("DeleteAjax")', { id: idEventoParaExcluir }, function (data) {
+                if (data.sucesso) {
+                    $("#modalExcluir").modal('hide');
+                    location.reload();
+                } else {
+                    alert("Erro ao excluir evento: " + data.mensagem);
+                }
+            }).fail(function () {
+                alert("Erro ao se comunicar com o servidor.");
+            });
+        });
+
+        $(document).ready(function () {
+            $('#tabelaEventos').DataTable({
+                language: {
+                    "search": "Buscar:",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ eventos",
+                    "paginate": {
+                        "first": "Primeiro",
+                        "last": "Último",
+                        "next": "Próximo",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
+}
