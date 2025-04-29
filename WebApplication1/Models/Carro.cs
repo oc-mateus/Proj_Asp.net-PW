@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,79 +8,87 @@ namespace WebApplication1.Models
 {
     public class Carro
     {
+        public int Id { get; set; }
+        [Required(ErrorMessage = "A Placa é Obrigatório!")]
         public string Placa { get; set; }
+
+        [Required(ErrorMessage = "O Modelo é Obrigatório!")]
+        public string Modelo { get; set; }
+
+        [Required(ErrorMessage = "O Ano de Fabricação é obrigatório.")]
+
+        [DataType(DataType.Date)]
+
+        [Display(Name = "Ano de Fabricação")]
         public DateTime Ano { get; set; }
+
+
+        
+        [Required(ErrorMessage = "A Cor é Obrigatória!")]
         public string Cor { get; set; }
+
+        // Método para retornar o ano do carro
         public string GetDataCarro()
         {
             return Ano.ToString("yyyy");
         }
 
+        // Método para gerar a lista de carros na sessão, caso ainda não exista
         public static void GerarListaCarro(HttpSessionStateBase session)
         {
-            if (session["ListaCarro"] != null)
+            if (session["ListaCarro"] == null)
             {
-                if (((List<Carro>)session["ListaCarro"]).Count > 0)
-                {
-                    return;
-                }
-            }
-
-            var lista = new List<Carro>();
-            lista.Add(new Carro { Placa = "ABC-14F4", Ano = new DateTime(2015, 1, 1), Cor = "Azul" });
-            lista.Add(new Carro { Placa = "DEF-23G5", Ano = new DateTime(2018, 1, 1), Cor = "Vermelho" });
-            lista.Add(new Carro { Placa = "GHI-56H7", Ano = new DateTime(2020, 1, 1), Cor = "Preto" });
-            lista.Add(new Carro { Placa = "JKL-78I9", Ano = new DateTime(2017, 1, 1), Cor = "Branco" });
-            lista.Add(new Carro { Placa = "MNO-90J1", Ano = new DateTime(2019, 1, 1), Cor = "Prata" });
-            lista.Add(new Carro { Placa = "PQR-12K3", Ano = new DateTime(2016, 1, 1), Cor = "Cinza" });
-            lista.Add(new Carro { Placa = "STU-34L5", Ano = new DateTime(2021, 1, 1), Cor = "Verde" });
-            lista.Add(new Carro { Placa = "VWX-56M7", Ano = new DateTime(2013, 1, 1), Cor = "Amarelo" });
-            lista.Add(new Carro { Placa = "YZA-78N9", Ano = new DateTime(2014, 1, 1), Cor = "Azul" });
-            lista.Add(new Carro { Placa = "BCD-90O1", Ano = new DateTime(2022, 1, 1), Cor = "Vermelho" });
-            lista.Add(new Carro { Placa = "EFG-12P3", Ano = new DateTime(2015, 1, 1), Cor = "Preto" });
-            lista.Add(new Carro { Placa = "HIJ-34Q5", Ano = new DateTime(2018, 1, 1), Cor = "Branco" });
-            lista.Add(new Carro { Placa = "KLM-56R7", Ano = new DateTime(2020, 1, 1), Cor = "Prata" });
-            lista.Add(new Carro { Placa = "NOP-78S9", Ano = new DateTime(2017, 1, 1), Cor = "Cinza" });
-            lista.Add(new Carro { Placa = "QRS-90T1", Ano = new DateTime(2016, 1, 1), Cor = "Verde" });
-
-            session.Remove("ListaCarro");
-            session.Add("ListaCarro", lista);
-        }
-
-        public void AdicionarCarro(HttpSessionStateBase session)
-        {
-            if (session["ListaCarro"] != null)
-            {
-                (session["ListaCarro"] as List<Carro>).Add(this);
+                session["ListaCarro"] = new List<Carro>();  // Corrigido para usar List<Carro>
             }
         }
 
+        // Método para procurar um carro na lista da sessão por ID
         public static Carro ProcurarCarro(HttpSessionStateBase session, int id)
         {
             if (session["ListaCarro"] != null)
             {
-                return (session["ListaCarro"] as List<Carro>).ElementAt(id);
+                return (session["ListaCarro"] as List<Carro>)?.ElementAtOrDefault(id); // Protege contra exceções
             }
 
             return null;
         }
 
+        // Método para excluir um carro da lista da sessão
         public void ExcluirCarro(HttpSessionStateBase session)
         {
             if (session["ListaCarro"] != null)
             {
-                (session["ListaCarro"] as List<Carro>).Remove(this);
+                var lista = session["ListaCarro"] as List<Carro>;
+                lista?.Remove(this);  // Protege contra null
             }
         }
 
+        // Método para adicionar um novo carro na lista da sessão
+        public void AdicionarCarro(HttpSessionStateBase session)
+        {
+            var lista = session["ListaCarro"] as List<Carro>;
+
+            if (lista != null)
+            {
+                // Atribui um novo ID (o maior ID + 1 ou 0 caso seja a primeira adição)
+                this.Id = lista.Any() ? lista.Max(c => c.Id) + 1 : 0;
+                lista.Add(this);
+            }
+        }
+
+        // Método para editar um carro na lista da sessão
         public void EditarCarro(HttpSessionStateBase session, int id)
         {
-            if (session["ListaCarro"] != null)
+            var lista = session["ListaCarro"] as List<Carro>;
+            if (lista != null)
             {
-                var carro = Carro.ProcurarCarro(session, id);
-                carro.Placa = this.Placa;
-                carro.Ano = this.Ano;
-                carro.Cor = this.Cor;
+                var carro = lista.ElementAtOrDefault(id);
+                if (carro != null)
+                {
+                    carro.Placa = this.Placa;
+                    carro.Ano = this.Ano;
+                    carro.Cor = this.Cor;
+                }
             }
         }
     }

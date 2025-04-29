@@ -1,51 +1,106 @@
 ﻿@model IEnumerable<WebApplication1.Models.Carro>
 
 @{
-    ViewBag.Title = "Listar";
+    ViewBag.Title = "Lista de Carros";
 }
 
-<h2>Listar: </h2>
+<h2 class="mb-4">Lista de Carros</h2>
 
-<button class="btn btn-outline-primary">
-    @Html.ActionLink("Cadastrar", "Create")
-</button>
-<a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "carro" })" class="btn btn-outline-secondary">
-    Relatório de Carros
-</a>
+<div class="mb-3">
+    @Html.ActionLink("Cadastrar", "Create", null, new { @class = "btn btn-outline-primary" })
+    <a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "carro" })" class="btn btn-outline-danger">📄 Exportar PDF</a>
+    <a href="@Url.Action("DownloadExcel", "Excel", new { tema = "carro" })" class="btn btn-outline-success">📊 Exportar Excel</a>
+</div>
 
-
-<table class="mt-2 table table-hover table-bordered">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Placa)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ano)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cor)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table id="tabelaCarros" class="table table-bordered table-hover">
+    <thead class="thead-dark">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Placa)
-            </td>
-            <td>
-                @item.GetDataCarro()
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cor)
-            </td>
-            <td>
-                @Html.ActionLink("✒", "Edit", new { id = Model.ToList<WebApplication1.Models.Carro>().IndexOf(item) }) |
-                @Html.ActionLink("👁", "Exibir", new { id = Model.ToList<WebApplication1.Models.Carro>().IndexOf(item) }) |
-                @Html.ActionLink("🗑", "Delete", new { id = Model.ToList<WebApplication1.Models.Carro>().IndexOf(item) })
-            </td>
+            <th>@Html.DisplayNameFor(model => model.Placa)</th>
+            <th>@Html.DisplayNameFor(model => model.Ano)</th>
+            <th>@Html.DisplayNameFor(model => model.Ano)</th>
+            <th>@Html.DisplayNameFor(model => model.Modelo)</th>
+            <th style="width: 150px;">Ações</th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => item.Placa)</td>
+                <td>@item.GetDataCarro()</td>
+                <td>@Html.DisplayFor(m => item.Cor)</td>
+                <td>@Html.DisplayFor(m => item.Modelo)</td>
+                <td>
+                    @Html.ActionLink("✏️ Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                    <button class="btn btn-outline-danger btn-sm" onclick="confirmarExclusao(@item.Id, '@item.Placa')">🗑 Excluir</button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+<!-- Modal de Exclusão -->
+<div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="modalExcluirLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalExcluirLabel">Confirmar Exclusão</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja excluir o carro de placa <strong id="carroPlaca"></strong>?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-danger" id="btnConfirmarExcluir">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" />
+
+    <script>
+        let idCarroParaExcluir = 0;
+
+        function confirmarExclusao(id, placa) {
+            idCarroParaExcluir = id;
+            $('#carroPlaca').text(placa);
+            $('#modalExcluir').modal('show');
+        }
+
+        $('#btnConfirmarExcluir').click(function () {
+            $.post('@Url.Action("DeleteAjax", "Carro")', { id: idCarroParaExcluir }, function (data) {
+                if (data.sucesso) {
+                    $('#modalExcluir').modal('hide');
+                    location.reload();
+                } else {
+                    alert(data.mensagem || "Erro ao excluir.");
+                }
+            }).fail(function () {
+                alert("Erro ao se comunicar com o servidor.");
+            });
+        });
+
+        $(document).ready(function () {
+            $('#tabelaCarros').DataTable({
+                language: {
+                    "search": "Buscar:",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ carros",
+                    "paginate": {
+                        "first": "Primeiro",
+                        "last": "Último",
+                        "next": "Próximo",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
+}

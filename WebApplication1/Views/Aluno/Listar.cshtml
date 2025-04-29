@@ -1,52 +1,106 @@
-﻿@model List<WebApplication1.Models.Carro>
-
+﻿@model IEnumerable<WebApplication1.Models.Aluno>
 @{
-    ViewBag.Title = "Lista de Carros";
+    ViewBag.Title = "Lista de Alunos";
 }
 
-<h2>Lista de Carros</h2>
+<h2 class="mb-4">Lista de Alunos</h2>
 
-<a>
+<div class="mb-3">
     @Html.ActionLink("Cadastrar", "Create", null, new { @class = "btn btn-outline-primary" })
-</a>
+    <a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "aluno" })" class="btn btn-outline-danger">📄 Exportar PDF</a>
+    <a href="@Url.Action("DownloadExcel", "Excel", new { tema = "aluno" })" class="btn btn-outline-success">📊 Exportar Excel</a>
+</div>
 
-<a href="@Url.Action("DownloadPdf", "Pdf", new { tema = "carro" })" class="btn btn-outline-secondary">
-    Relatório de Carros
-</a>
-
-<a href="@Url.Action("DownloadExcel", "Excel", new { tema = "carro" })" class="btn btn-outline-success">
-    Planilha de Carros
-</a>
-
-<hr />
-
-<table id="tabelaCarros" class="table table-bordered table-hover">
-    <thead>
+<table id="tabelaAlunos" class="table table-bordered table-hover">
+    <thead class="thead-dark">
         <tr>
-            <th>Placa</th>
-            <th>Ano</th>
-            <th>Cor</th>
-            <th>Ações</th>
+            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.RA)</th>
+            <th>@Html.DisplayNameFor(model => model.Nascimento)</th>
+            <th style="width: 150px;">Ações</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var carro in Model)
+        @foreach (var aluno in Model)
         {
             <tr>
-                <td>@carro.Placa</td>
-                <td>@carro.Ano.ToString("yyyy")</td>
-                <td>@carro.Cor</td>
+                <td>@aluno.Nome</td>
+                <td>@aluno.Email</td>
+                <td>@aluno.RA</td>
+                <td>@aluno.Nascimento.ToShortDateString()</td>
                 <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = carro.Id }, new { @class = "btn btn-outline-info btn-sm" })
-                    <button class="btn btn-outline-danger btn-sm" onclick="excluirCarro(@carro.Id)">Excluir</button>
+                    @Html.ActionLink("✏️ Editar", "Edit", new { id = aluno.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                    <button class="btn btn-outline-danger btn-sm" onclick="confirmarExclusao(@aluno.Id, '@aluno.Nome')">🗑 Excluir</button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="modalExcluirLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalExcluirLabel">Confirmar Exclusão</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja excluir o aluno <strong id="alunoNome"></strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarExcluir">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Bootstrap 4 e DataTables -->
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-    <link
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" />
+
+    <script>
+        var idAlunoParaExcluir = 0;
+
+        function confirmarExclusao(id, nome) {
+            idAlunoParaExcluir = id;
+            $("#alunoNome").text(nome);
+            $("#modalExcluir").modal('show');
+        }
+
+        $("#btnConfirmarExcluir").click(function () {
+            $.post('@Url.Action("DeleteAjax")', { id: idAlunoParaExcluir }, function (data) {
+                if (data.sucesso) {
+                    $("#modalExcluir").modal('hide');
+                    location.reload();
+                } else {
+                    alert("Erro ao excluir aluno: " + data.mensagem);
+                }
+            }).fail(function () {
+                alert("Erro ao se comunicar com o servidor.");
+            });
+        });
+
+        $(document).ready(function () {
+            $('#tabelaAlunos').DataTable({
+                language: {
+                    "search": "Buscar:",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ alunos",
+                    "paginate": {
+                        "first": "Primeiro",
+                        "last": "Último",
+                        "next": "Próximo",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
+}
