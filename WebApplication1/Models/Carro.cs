@@ -27,56 +27,53 @@ namespace WebApplication1.Models
         [Required(ErrorMessage = "A Cor é Obrigatória!")]
         public string Cor { get; set; }
 
-        // Método para retornar o ano do carro
         public string GetDataCarro()
         {
             return Ano.ToString("yyyy");
         }
 
-        // Método para gerar a lista de carros na sessão, caso ainda não exista
         public static void GerarListaCarro(HttpSessionStateBase session)
         {
             if (session["ListaCarro"] == null)
             {
-                session["ListaCarro"] = new List<Carro>();  // Corrigido para usar List<Carro>
+                session["ListaCarro"] = new List<Carro>();  
             }
         }
 
-        // Método para procurar um carro na lista da sessão por ID
+ 
         public static Carro ProcurarCarro(HttpSessionStateBase session, int id)
         {
             if (session["ListaCarro"] != null)
             {
-                return (session["ListaCarro"] as List<Carro>)?.ElementAtOrDefault(id); // Protege contra exceções
+                return (session["ListaCarro"] as List<Carro>)?.ElementAtOrDefault(id); 
             }
 
             return null;
         }
 
-        // Método para excluir um carro da lista da sessão
+
         public void ExcluirCarro(HttpSessionStateBase session)
         {
             if (session["ListaCarro"] != null)
             {
                 var lista = session["ListaCarro"] as List<Carro>;
-                lista?.Remove(this);  // Protege contra null
+                lista?.Remove(this); 
             }
         }
 
-        // Método para adicionar um novo carro na lista da sessão
+
         public void AdicionarCarro(HttpSessionStateBase session)
         {
             var lista = session["ListaCarro"] as List<Carro>;
 
             if (lista != null)
             {
-                // Atribui um novo ID (o maior ID + 1 ou 0 caso seja a primeira adição)
-                this.Id = lista.Any() ? lista.Max(c => c.Id) + 1 : 0;
-                lista.Add(this);
+                this.Id = lista.Any() ? lista.Max(c => c.Id) + 1 : 0; 
+                lista.Add(this); 
             }
         }
 
-        // Método para editar um carro na lista da sessão
+
         public void EditarCarro(HttpSessionStateBase session, int id)
         {
             var lista = session["ListaCarro"] as List<Carro>;
@@ -87,6 +84,7 @@ namespace WebApplication1.Models
                 {
                     carro.Placa = this.Placa;
                     carro.Ano = this.Ano;
+                    carro.Modelo = this.Modelo;
                     carro.Cor = this.Cor;
                 }
             }
